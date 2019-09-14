@@ -3,27 +3,70 @@ class MaxHeap {
     this.priorityQueue = [];
   }
 
-  getMax() {}
+  getMax() {
+    return this.priorityQueue[0];
+  }
 
-  extractMax() {}
+  extractMax() {
+    const rootNode = this.priorityQueue[0];
+    this.priorityQueue[0] = this.priorityQueue[this.priorityQueue.length - 1];
+    this.priorityQueue.pop();
+
+    let parentIndex = 0;
+    let parent = this.priorityQueue[parentIndex];
+    let firstChildIndex = 2 * parentIndex + 1;
+    let firstChild = this.priorityQueue[firstChildIndex];
+    let secondChildIndex = 2 * parentIndex + 2;
+    let secondChild = this.priorityQueue[secondChildIndex];
+
+    let length = this.priorityQueue.length;
+    while (parentIndex < length) {
+      let largerChild = firstChild > secondChild ? firstChild : secondChild;
+      let largerChildIndex =
+        largerChild === firstChild ? firstChildIndex : secondChildIndex;
+
+      if (parent < largerChild) {
+        this.priorityQueue[parentIndex] = largerChild;
+        this.priorityQueue[largerChildIndex] = parent;
+        parentIndex = largerChildIndex;
+      }
+
+      firstChildIndex = 2 * parentIndex + 1;
+      secondChildIndex = 2 * parentIndex + 2;
+      parent = this.priorityQueue[parentIndex];
+      firstChild = this.priorityQueue[firstChildIndex];
+      if (secondChildIndex < this.priorityQueue.length) {
+        secondChild = this.priorityQueue[secondChildIndex];
+      }
+
+      console.log("firstChild", firstChild);
+      console.log("secondChild", secondChild);
+      length--;
+    }
+    console.log(this.priorityQueue);
+    return rootNode;
+  }
 
   insert(item) {
-    if (this.priorityQueue.length > 0) {
-      const parentIndex = this.priorityQueue.length - 1 / 2;
-      console.log(parentIndex);
+    this.priorityQueue.push(item);
+    let itemIndex = this.priorityQueue.length - 1;
 
-      const parent = this.priorityQueue[parentIndex];
-
-      console.log("item", item);
-      console.log("parent", parent);
-
-      if (item > parent) {
-        this.priorityQueue[parentIndex] = item;
-        this.priorityQueue.push(parent);
-      }
+    let itemParentIndex;
+    if (itemIndex > 0) {
+      itemParentIndex = Math.floor((itemIndex - 1) / 2);
+    } else {
+      itemParentIndex = Math.ceil((itemIndex - 1) / 2);
     }
 
-    this.priorityQueue.push(item);
+    let parent = this.priorityQueue[itemParentIndex];
+    while (item > parent) {
+      this.priorityQueue[itemParentIndex] = item;
+      this.priorityQueue[itemIndex] = parent;
+
+      itemIndex = itemParentIndex;
+      itemParentIndex = Math.floor((itemIndex - 1) / 2);
+      parent = this.priorityQueue[itemParentIndex];
+    }
   }
 
   delete() {}
