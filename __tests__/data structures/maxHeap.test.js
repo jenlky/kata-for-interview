@@ -51,7 +51,7 @@ describe("MaxHeap", () => {
     expect(maxHeap.getMax()).toBe(300);
   });
 
-  it.only("extractMax should remove and return the root node", () => {
+  it("extractMax should remove and return the root node", () => {
     maxHeap.insert(10);
     maxHeap.insert(100);
     maxHeap.insert(50);

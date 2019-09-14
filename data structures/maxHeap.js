@@ -35,15 +35,9 @@ class MaxHeap {
       secondChildIndex = 2 * parentIndex + 2;
       parent = this.priorityQueue[parentIndex];
       firstChild = this.priorityQueue[firstChildIndex];
-      if (secondChildIndex < this.priorityQueue.length) {
-        secondChild = this.priorityQueue[secondChildIndex];
-      }
-
-      console.log("firstChild", firstChild);
-      console.log("secondChild", secondChild);
+      secondChild = this.priorityQueue[secondChildIndex];
       length--;
     }
-    console.log(this.priorityQueue);
     return rootNode;
   }
 
